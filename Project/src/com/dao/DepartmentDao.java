@@ -9,5 +9,5 @@ public interface DepartmentDao {
       
 	
 	
-	
-}
+		int insertDepartment(Department department);
+	}

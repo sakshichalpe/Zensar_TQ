@@ -1,71 +1,60 @@
 package com.service;
+
 import java.util.List;
+import java.util.Set;
+import com.configuration.ConnectionFactory;
 import com.dao.EmployeeDao;
 import com.dao.EmployeeDaoImplementation;
 import com.model.Employee;
 
-public class EmployeeServiceImplementation implements EmployeeService  //, EmployeeDao 
-{
- EmployeeDao employeeDao;
- 
- public EmployeeServiceImplementation() {
-	 
-	 employeeDao = new EmployeeDaoImplementation();
- }
+public class EmployeeServiceImplementation implements EmployeeService {
 
-	public EmployeeServiceImplementation(EmployeeDao employeeDao) {
-	this.employeeDao = employeeDao;
-}
-	
-	public EmployeeDao getEmployeeDao() {
-		return employeeDao;
-	}
+	EmployeeDao employeedao;
 
-	public void setEmployeeDao(EmployeeDao employeeDao) {
-		this.employeeDao = employeeDao;
+	public EmployeeServiceImplementation() {
+		employeedao = new EmployeeDaoImplementation();
+
 	}
 
 	public List<Employee> getAllEmployee() {
-		return employeeDao.getAllEmployee();
+
+		return employeedao.getAllEmployee();
 	}
 
 	@Override
 	public int insertEmployee(Employee employee) {
-		
-		return employeeDao.insertEmployees(employee);
-	}
-	@Override
-	public int removeEmployee(int emp_id) {
-	
-		return employeeDao.removeEmployee(emp_id);
-	}
-	
-	public int updateRecord(Employee employeeOne) {
-		return employeeDao.updateRecord(employeeOne);
-	}
-
-	
-	/* 
-    public List<Employee> search_by_dept_id(int departmentid) {
-		
-		return employeeDao.search_by_dept_id(employee2);
-	}*/
-
-	@Override
-	public Employee search_by_emp_name(String name) {
-		
-		return employeeDao.search_by_emp_name(name);
+		// TODO Auto-generated method stub
+		return employeedao.insertEmployee(employee);
 	}
 
 	@Override
-	public void dep_wise_Emp_count() {
-		employeeDao.dep_wise_Emp_count();
-		
-	} 
-	
+	public boolean updateEmployee(Employee employee) {
+		return employeedao.updateEmployee(employee);
 
-		
 	}
 
+	@Override
+	public int deleteEmployee(int id) {
+		return employeedao.deleteEmployee(id);
 
+	}
 
+	@Override
+	public Employee searchEmployeebyId(int id) {
+
+		return employeedao.searchEmployeebyId(id);
+	}
+
+	@Override
+	public void departmentWiseEmployeeCount() {
+		employeedao.departmentWiseEmployeeCount();
+
+	}
+
+	@Override
+	public List<Employee> departmentHaveEmployee(int id) {
+		// TODO Auto-generated method stub
+		return employeedao.departmentHaveEmployee(id);
+	}
+
+}

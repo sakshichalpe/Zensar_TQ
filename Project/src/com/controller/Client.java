@@ -1,173 +1,271 @@
 package com.controller;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import com.model.Department;
 import com.model.Employee;
 import com.service.DepartmentService;
+import com.service.DepartmentServiceImplements;
 import com.service.EmployeeService;
 import com.service.EmployeeServiceImplementation;
-import java.util.*;
 
 public class Client {
+	static String str;
+
+	public static boolean isValidations(String mobilenumber) {
+		Pattern pattern = Pattern.compile(("(0/91)?[7-9][0-9]{9}"));
+		Matcher match = pattern.matcher(mobilenumber);
+		return (match.find() && match.group().equals(mobilenumber));
+	}
+
+	public static boolean isValidationsCharacter(String employeeName) {
+		Pattern pattern = Pattern.compile(("[a-zA-Z0-9 ]*"));
+		Matcher match = pattern.matcher(employeeName);
+		return (match.find() && match.group().equals(employeeName));
+	}
+
+	public static boolean isValidationsEmail(String email) {
+		Pattern pattern = Pattern.compile("^(.+)@(.+)$");
+		Matcher match = pattern.matcher(email);
+		return (match.find() && match.group().equals(email));
+
+	}
+
 	public static void main(String[] args) {
-		String str;
-		
-		
+
+		DepartmentService departmentservice = new DepartmentServiceImplements();
 		EmployeeService employeeservice = new EmployeeServiceImplementation();
-		do {
-            System.out.println("****************HR Management***********************");
-            Scanner sc= new Scanner(System.in);
-            
-            System.out.println(" Choice operation you want to go for:");
-            
-			System.out.println("1. Employee Details"); 
-			System.out.println("2. Add Employees" );
-		    System.out.println("3. Delete Record" );
-			System.out.println("4. Update Employee Record");  
-			System.out.println("5. Find Employee deatils using Employee_id" );
-		    System.out.println("6. Find Employee deatils using Department_id\" ");
-    		System.out.println("7. Department wise Employee count");
-					
-			System.out.println("\nEnter Choice:");
-    		//	System.out.println("Login Succesfull");
-    		
-		//	System.out.println("\nEnter Choice:");
-			int choice = sc.nextInt();
-			switch (choice) {
-			case 1:
-				List<Employee> employeeList = employeeservice.getAllEmployee(); // fetching
-				Iterator<Employee> itr = employeeList.iterator();
-				System.out.println("***All Employee Datails****");
-				while (itr.hasNext()) {
-					Employee employee = (Employee) itr.next();
-					System.out.println("Emp Id:- " + employee.getEmp_id());
-					System.out.println("Emp name:- " + employee.getEmp_name());
-					System.out.println("Emp Salary:- " + employee.getEmp_salary());
-					System.out.println("Emp Mobile no:- " + employee.getEmp_mb());
-					System.out.println("Emp Email:- " + employee.getEmail());
-					System.out.println("Emp dept Id:- " + employee.getDept_id());
-					System.out.println("**************************************");
-				}
-				break;
+		Scanner sc = new Scanner(System.in);
+		System.out.println("***************HR Mangement System****************");
+		System.out.println("*********Login************");
+		System.out.println("Enter Username: ");
+		String userName = sc.next();
+		System.out.println("Enter Password: ");
+		String password = sc.next();
+		if (userName.equals("Sakshi") && password.equals("Sakshi")) {
+			System.out.println("***********Login Successfully done!*******");
 			
-			case 2:
-				System.out.println(" ");
-				System.out.println("************ Enter Employee Details information ************");
-				System.out.println("Enter Employee Id:- ");
-				int Emp_id = sc.nextInt();
-				System.out.println("Enter Employee Name:- ");
-				String Emp_name = sc.next();
-				System.out.println("Enter Employee Salary:- ");
-				Float emp_salary = sc.nextFloat();
-				System.out.println("Enter Employee email:- ");
-				String Email = sc.next();
-				System.out.println("Enter Employee Mobile No:- ");
-				String Emp_mb = sc.next();
-				/*if (!(Emp_mb.charAt(0) == '0') && Emp_mb.length() == 10 && Emp_mb.matches("[0-9-]")) {
-					System.out.println("pls enter valid");
-				}*/
+			System.out.println("*********Welcome********");
+			do {
+
+				System.out.println(
+						"1.EmployeeDetails\t" + "\n" + "2.Add Employee\t" + "\n" + "3.Update Employee Details" + "\n"
+								+ "4.Delete Employee\t" + "\n" + "5.SearchEmployeebyId\t" + "\n" + "6.Add Department"
+								+ "\n" + "7.DepartmentNamebyCount" + "\n" + "8.List of Employee from department");
+
+				System.out.println("\nEnter your choice: ");
+				int choice = sc.nextInt();
+
+				List<Employee> list = employeeservice.getAllEmployee();
+				Iterator<Employee> itr = list.iterator();
+				switch (choice) {
+
+				case 1:
+					System.out.println("********** All Employee Details *****");
+					while (itr.hasNext()) {
+						Employee employee = itr.next();
+						
+						System.out.println("Employee Id:- " + employee.getEmp_id());
+						System.out.println("Employee name:- " + employee.getEmp_name());
+						System.out.println("Employee Salary:- " + employee.getEmp_salary());
+						System.out.println("Employee Mobile no:- " + employee.getEmp_mb());
+						System.out.println("Employee Email:- " + employee.getEmail());
+						System.out.println("Employee dept Id:- " + employee.getDept_id());
+						System.out.println("**************************************");
 				
-				System.out.println("Enter Department id:- ");
-				int Dept_id = sc.nextInt();
-				Employee employee = new Employee(Emp_id, emp_salary, Emp_name, Email, Emp_mb, Dept_id);
-				int status = employeeservice.insertEmployee(employee); // insert
-				if (status > 0) {
-					System.out.println("Employee added successfully.......");
-				} else {
-					System.out.println("Unable to add Employee.......");	
-				}
-				System.out.println("*******************************************");
-				break;
+					}
+					break;
 
+				case 2:
 
-			case 3:
-				System.out.println("*******************************************");
-				System.out.println("Enter record number to delete :");
-				int emp_id = sc.nextInt();
-				//Employee employee1 = new Employee(Emp_id, emp_salary, Emp_name, Email, Emp_mb, Dept_id);
-				//Employee employee = new Employee(Emp_id);
-				int EmployeeRecordDeleted =employeeservice.removeEmployee(emp_id); // calling remove
-				if(EmployeeRecordDeleted>0) {
-					System.out.println("Deleted Succesfully");
-				}
-				else {
-					System.out.println("opss! Unsuccesfully");
-				}
-				System.out.println("********************************************");
-				break;
+					System.out.println("");
+					System.out.println("********Enter Employee Information******");
+					System.out.println("Enter Employeeid: ");
+					int Emp_id= sc.nextInt();
+					System.out.println("Enter Employeename: ");
+					String emp_name = sc.next();
+					if (isValidationsCharacter(emp_name)) {
 
-			case 4:
-				System.out.println("********************************************");
-				System.out.println("Enter Employeeid to update  :");
-				int Emp_id1 = sc.nextInt();
-				System.out.println("Enter student name to update :");
-				String Emp_name1 = sc.next();
-				System.out.println("Enter students mobile no to update  :");
-				String Emp_mb1 = sc.next();
-				System.out.println("Enter students email to update  :");
-				String Emp_email1 = sc.next();
-				System.out.println("Enter students Salary to update:");
-				Float Emp_salary1 = sc.nextFloat();
-				System.out.println("Enter students department id :");
-				int Dept_id1 = sc.nextInt();
+					} else {
+						System.out.println("It contain special character which is invalid:");
+						System.out.println("Please enter again employeename:  ");
+						emp_name = sc.next();
+					
+					}
+					System.out.println("Enter Employee Name:- ");
+					String Emp_name = sc.next();
+					System.out.println("Enter Employee Salary:- ");
+					int emp_salary = sc.nextInt();
+					System.out.println("Enter Employee email:- ");
+					String Email = sc.next();
+					System.out.println("Enter Employee Mobile No:- ");
+					String Emp_mb = sc.next();
+					System.out.println("Enter Department id:- ");
+					int Dept_id = sc.nextInt();
+					if (isValidations(Emp_mb)) {
 
-				Employee employeeOne = new Employee(Emp_id1, Emp_salary1, Emp_name1, Emp_email1, Emp_mb1, Dept_id1);
-				int isUpdateRecord = employeeservice.updateRecord(employeeOne);
-				if (isUpdateRecord > 0)
-					System.out.println("yeah!!!  Employee update successfully");
-				else
-					System.out.println("ops!!    Unable to update Employee");
-				System.out.println("********************************************");
-				break; // calling update
-			
-      	  case 5:
-      		System.out.println("********************************************");
-			//System.out.println("Search by Employee deatils by Employee by entering name");
-			System.out.println("Enter Employee Id");
-          	String employee1=sc.next();
-          	System.out.println(" Sahil Maske, 23456. 9876556777, Sahil@gmail.com,1003");
-          /*	
-          	//Employee employee1deatils=employeeservice.search_by_emp_name(employee1);
-          	
-          	if(employee1!=null) {
-          		System.out.println(" Employee Id: " +employee1deatils.getEmp_id());
-          		System.out.println(" Employee Name: " +employee1deatils.getEmp_name());
-          		System.out.println(" Employee Salary: " +employee1deatils.getEmp_salary());
-          		System.out.println(" Employee Mobile No: " +employee1deatils.getEmp_mb());
-          		System.out.println(" Employee Dept Id: " +employee1deatils.getDept_id());
-          	}else {
-          		System.out.println("No such Employee_Id is present... ");	
-          	}
-          	System.out.println("********************************************");
-          	  System.out.println();
-          	  */
-			
-          	  
-          	  
-      	  case 6: 	  
-          	System.out.println("Enter Department Id");
-          	int employee2=sc.nextInt();
-          	  System.out.println("3, Sushil kakade, 2346   9876567771, Sushil@gmail.com ");
-          	  System.out.println("6, Chanda Maske,  2345   8876556745, Chanda@gmail.com ");
-          	 System.out.println("8 , Sahil Maske,   2045   8965567979, Sahil@gmail.com ");
-          	  break;
-          	  
-		  	
-			case 7:
-      		System.out.println("********************************************");
-      		System.out.println("");
-      		System.out.println("Enter dept_id ");
-      		int dept_count = sc.nextInt();
-      		System.out.println("Departments wise employee counts is: 3");
-      		
-      		//employeeservice.dep_wise_Emp_count();
-      		System.out.println("********************************************");		
-	break;
-		}
-		System.out.println();
-			System.out.println("Do you wish to continue(y/n) ? ");
-			str = sc.next();
-		} while (str.equals("y") || str.equals("Y"));
+					} else {
+						System.out.println("Enter mobile number is invalid");
+						System.out.println("Please enter again:  ");
+						Emp_mb = sc.next();
+					}
+					System.out.println("Enter Employee Email:");
+					String email = sc.next();
+					if (isValidationsEmail(email)) {
+						System.out.println();
+					} else {
+						System.out.println("Enter Email is invalid: ");
+						System.out.println("Please enter again:  ");
+						email = sc.next();
+					}
+					
+					/*Employee employee = new Employee(int emp_id, String emp_name1, int emp_salary2, String email1, 
+							String emp_mb, int Dept_id1				);*/
+							Employee employee = new Employee();	
+		       int status = employeeservice.insertEmployee(employee);
+					if (status > 0) {
+						System.out.println("row  added successfully: " + status);
+					} else {
+						System.out.println("unable to added employee");
+					}
+					break;
+
+				case 3:
+
+					System.out.println("*********Update Employee Information******");
+					System.out.println("Enter EmployeeId to be updated: ");
+					int employeeId1 = sc.nextInt();
+					System.out.println("Enter EmployeeName to be updated: ");
+					String employeeName1 = sc.next();
+					if (isValidationsCharacter(employeeName1)) {
+
+					} else {
+						System.out.println("It contain special character which is invalid:");
+						System.out.println("Please enter again employeename:  ");
+						employeeName1 = sc.next();
+					}
+					System.out.println("Enter EmployeeSalary to be updated: ");
+					int employeeSalary1 = sc.nextInt();
+					System.out.println("Enter Department id to be updated: ");
+					int departmnetId1 = sc.nextInt();
+					
+					System.out.println("Enter MobileNumber to be updated: ");
+					String mobileNumber1 = sc.next();
+					if (isValidations(mobileNumber1)) {
+
+					} else {
+						System.out.println("*********Enter mobile number is invalid********");
+						System.out.println("Please enter again:  ");
+
+						mobileNumber1 = sc.next();
+					}
+					System.out.println("Enter Email to be updated");
+					String email11 = sc.next();
+					if (isValidationsEmail(email11)) {
+
+					} else {
+						System.out.println("Enter Email is invalid: ");
+						System.out.println("Please enter again:  ");
+						email11 = sc.next();
+					}
+					Employee employee1 = new Employee();
+					boolean statusupdate = employeeservice.updateEmployee(employee1);
+					if (statusupdate) {
+						System.out.println("Employee update successfully");
+					} else {
+						System.out.println("Enable to update employee ");
+					}
+
+					break;
+				case 4:
+					System.out.println("********* Delete Employee Details*********** ");
+					System.out.println("Enter Employee id to be Deleted");
+					int employeeId2 = sc.nextInt();
+					int statusdelete = employeeservice.deleteEmployee(employeeId2);
+					if (statusdelete > 0) {
+						System.out.println("row deleted successfully: " + statusdelete);
+					} else {
+						System.out.println("Unable to delete employee details");
+					}
+					break;
+				case 5:
+					System.out.println("*************Search by employee id********************");
+					System.out.println("Enter employee id");
+					int employeeid3 = sc.nextInt();
+					Employee employeedetails = employeeservice.searchEmployeebyId(employeeid3);
+					if (employeedetails != null) {
+						System.out.println("Employee id:  " + employeedetails.getEmp_id());
+						System.out.println("Employee id:  " + employeedetails.getEmp_name());
+						
+						System.out.println("Employee salary: " + employeedetails.getEmp_salary());
 		
+						System.out.println("Department Id:  " + employeedetails.getDept_id());
+						
+						System.out.println("Mobile Number: " + employeedetails.getEmp_mb());
+						System.out.println("Email : " + employeedetails.getEmail());
+					} else {
+						System.out.println("Employee record is not available");
+					}
+					break;
+				case 6:
+					System.out.println("");
+					System.out.println("********Enter Department information**********");
+					System.out.println("Enter Department Id");
+					
+					
+					System.out.println("Enter Department Name");
+					String departmentName2 = sc.next();
+					System.out.println("Enter the Department Locations");
+					int departmentId2 = sc.nextInt();
+					Department department = new Department( departmentName2,departmentId2 );
+					int statusDepartment = departmentservice.insertDepartment(department);
+					if (statusDepartment > 0) {
+						System.out.println("Department record Added Successfully");
+					} else {
+						System.out.println("Unable to add department details");
+					}
+					break;
+				case 7:
+
+					System.out.println("**********Strength of Department********");
+					System.out.println("***Count according to departmentname***");
+					employeeservice.departmentWiseEmployeeCount();
+					break;
+
+				case 8:
+					System.out.println("List of employee for department by Id");
+					System.out.println("Enter Department id: ");
+					int employeeid4 = sc.nextInt();
+					List<Employee> employeelist = employeeservice.departmentHaveEmployee(employeeid4);
+					for (Employee departmentRecord : employeelist) {
+						if (departmentRecord != null) {
+							
+							System.out.println("Employee id:  " + departmentRecord.getEmp_id());
+							System.out.println("Employee id:  " + departmentRecord.getEmp_name());
+							System.out.println("Employee salary: " + departmentRecord.getEmp_salary());
+			
+							System.out.println("Department Id:  " + departmentRecord.getDept_id());
+							
+							System.out.println("Mobile Number: " + departmentRecord.getEmp_mb());
+							System.out.println("Email : " + departmentRecord.getEmail());
+							
+							System.out.println("______________________________________________");
+						} else {
+							System.out.println("Employee record is not available");
+						}
+					}
+				}
+
+				System.out.println();
+				System.out.println("Do you wish to continue(y/n)?");
+				str = sc.next();
+			} while (str.equals("y") || str.equals("Y"));
+		} else {
+			System.out.println("Authentication Failed ");
+			System.out.println("Wrong Username and Password");
+		}
+
 	}
 }
-

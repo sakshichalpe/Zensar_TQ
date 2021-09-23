@@ -6,7 +6,7 @@ import com.dao.EmployeeDao;
 public  class Employee  {
 	
 private int Emp_id;
-private float Emp_salary;
+private int Emp_salary;
 private  String Emp_name;
 private  String Email;
 private String Emp_mb;
@@ -16,10 +16,10 @@ public Employee() {
 	// TODO Auto-generated constructor stub
 }
 
-public Employee(int emp_id, float emp_salary, String emp_name, String email, String emp_mb, int dept_id) {
+public Employee(int emp_id, int emp_salary2, String emp_name, String email, String emp_mb, int dept_id) {
 	super();
 	Emp_id = emp_id;
-	Emp_salary = emp_salary;
+	Emp_salary = emp_salary2;
 	Emp_name = emp_name;
 	Email = email;
 	Emp_mb = emp_mb;
@@ -40,11 +40,11 @@ public void setEmp_id(int emp_id) {
 	Emp_id = emp_id;
 }
 
-public float getEmp_salary() {
+public int getEmp_salary() {
 	return Emp_salary;
 }
 
-public void setEmp_salary(float emp_salary) {
+public void setEmp_salary(int emp_salary) {
 	Emp_salary = emp_salary;
 }
 

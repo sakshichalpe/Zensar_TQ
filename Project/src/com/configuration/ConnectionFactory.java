@@ -5,7 +5,7 @@ import java.sql.SQLException;      //import pkg
 
 public class ConnectionFactory {                                                  
 
-	static final String URL="jdbc:mysql://localhost:3306/hr_management";              //Mysql workbeanch
+	static final String URL="jdbc:mysql://localhost:3306/hr_management";          //Mysql workbeanch
 	static final String USER="root";
 	static final String PASS="Root";
 	

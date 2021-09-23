@@ -5,22 +5,22 @@ package com.service;
 	import com.model.Employee;
 	public interface EmployeeService {
 
+		
 			List<Employee> getAllEmployee();
-			
-			int insertEmployee(Employee employee);
-			int removeEmployee(int emp_id);
-			int updateRecord(Employee employeeOne);
-			
-			Employee search_by_emp_name(String name);    
-           // Employee search_by_emp_id(Employee employeeTwo);
-            void dep_wise_Emp_count(); 
-        
-           // public List<Employee> search_by_dept_id(int departmentid);
-			
 
-			
-            //  void search_emp_details_dept_          //1)API
-	}
+			int insertEmployee(Employee employee);
+
+			public boolean updateEmployee(Employee employee);
+
+			int deleteEmployee(int id);
+
+			Employee searchEmployeebyId(int id);
+
+			public void departmentWiseEmployeeCount();
+
+			List<Employee> departmentHaveEmployee(int id);
+
+		}
 	
 			
 			
