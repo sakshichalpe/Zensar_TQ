@@ -14,6 +14,8 @@ import com.service.EmployeeServiceImplementation;
 public class Client {
 	static String str;
 
+	
+	
 	public static boolean isValidations(String mobilenumber) {
 		Pattern pattern = Pattern.compile(("(0/91)?[7-9][0-9]{9}"));
 		Matcher match = pattern.matcher(mobilenumber);
@@ -245,12 +247,9 @@ public class Client {
 							System.out.println("Employee id:  " + departmentRecord.getEmp_id());
 							System.out.println("Employee id:  " + departmentRecord.getEmp_name());
 							System.out.println("Employee salary: " + departmentRecord.getEmp_salary());
-			
 							System.out.println("Department Id:  " + departmentRecord.getDept_id());
-							
 							System.out.println("Mobile Number: " + departmentRecord.getEmp_mb());
 							System.out.println("Email : " + departmentRecord.getEmail());
-							
 							System.out.println("______________________________________________");
 						} else {
 							System.out.println("Employee record is not available");

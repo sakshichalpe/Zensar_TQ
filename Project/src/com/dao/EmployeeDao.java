@@ -5,7 +5,6 @@ import com.model.Employee;
 public interface EmployeeDao 
 {
 
-
 	List<Employee> getAllEmployee();
 
 	int insertEmployee(Employee employee);

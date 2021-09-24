@@ -128,14 +128,7 @@ public class EmployeeDaoImplementation implements EmployeeDao {
 		Connection connection = null;
 		PreparedStatement preparedStatment = null;
 		try {
-			/*connection = ConnectionFactory.getConnection();
-			preparedStatement=connection.prepareStatement("update Employee set Emp_name=?,Emp_mb=?,Emp_email=?,Emp_salary=?,Dept_id=? where Emp_id=?");
-			preparedStatement.setString(1, employee.getEmp_name());
-			preparedStatement.setString(2,  employee.getEmp_mb());
-			preparedStatement.setString(3, employee.getEmail());
-			preparedStatement.setFloat(4,employee.getEmp_salary() );
-			preparedStatement.setInt(5,employee.getDept_id() );
-			preparedStatement.setInt(6, employee.getEmp_id());*/
+			
 			int i = preparedStatment.executeUpdate();
 			if (i == 1)
 				return true;
@@ -249,21 +242,14 @@ public class EmployeeDaoImplementation implements EmployeeDao {
 			while (resultset.next()) {
 				employee = new Employee();
 				
-				
+//int emp_id, int emp_salary2, String emp_name, String email, String emp_mb, int dept_id) {	
 				employee.setEmp_id(resultset.getInt("emp_id"));
+				employee.setEmp_salary(resultset.getInt("emp_salary"));
+				employee.setEmp_name(resultset.getString("emp.name"));
+				employee.setEmail(resultset.getString("email"));
+				employee.setEmp_mb(resultset.getString("emp_mb"));
+				employee.setDept_id(resultset.getInt("dept_id"));
 				
-				
-				
-				
-				/*employee.setEmployeeId(resultset.getInt("EmployeeId"));
-				employee.setEmployeeName(resultset.getString("EmployeeName"));
-				employee.setEmployeeSalary(resultset.getInt("EmployeeSalary"));
-				employee.setEmployeeAge(resultset.getInt("EmployeeAge"));
-				employee.setEmployeeAddress(resultset.getString("EmployeeAddress"));
-				employee.setDepartmentId(resultset.getInt("DepartmentId"));
-				employee.setRoleId(resultset.getInt("RoleId"));
-				employee.setMobileNumber(resultset.getString("MobileNumber"));
-				employee.setEmail(resultset.getString("Email"));*/
 				list.add(employee);
 			}
 		} catch (SQLException e) {

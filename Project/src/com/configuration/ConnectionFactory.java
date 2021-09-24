@@ -9,6 +9,7 @@ public class ConnectionFactory {
 	static final String USER="root";
 	static final String PASS="Root";
 	
+	
 	public static Connection getConnection() throws SQLException
 	{
 		Connection connection=null;
