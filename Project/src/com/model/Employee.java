@@ -13,7 +13,7 @@ private String Emp_mb;
 private int dept_id;
 
 public Employee() {
-	// TODO Auto-generated constructor stub
+	
 }
 
 public Employee(int emp_id, int emp_salary2, String emp_name, String email, String emp_mb, int dept_id) {
